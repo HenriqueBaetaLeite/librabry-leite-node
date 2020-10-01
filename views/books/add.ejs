@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="eng">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leite Library</title>
+  </head>
+
+  <body>
+    <h1>Leite Library</h1>
+    <h2>Cadastre novo livro</h2>
+
+    <% if (message) { %>
+    <p><%= message %>/p> <% } %></p>
+
+    <form action="/books" method="POST">
+      <label for="name">Nome</label>
+      <input type="text" id="name" />
+      <button type="submit">cadastrar</button>
+    </form>
+    <br />
+
+    <button><a href="/books">Voltar</a></button>
+  </body>
+</html>
