@@ -8,7 +8,7 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', './views/books');
 
-app.use('/books', booksController);
+app.use('/', booksController);
 
 // app.get('/books', booksController.index);
 // app.get('/books/new', booksController.add);
