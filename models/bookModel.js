@@ -1,23 +1,74 @@
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const findAll = async () =>
+const getAllBooks = async () =>
   connection()
-    .then((db) => db.getTable('livros').select(['nome']).execute())
-    .then((results) => results.fetchAll())
-    .then((books) => books.map(([nome]) => ({ nome })));
+    .then((db) => db.collection('newBooks').find().toArray())
+    .catch((err) => {
+      throw err;
+    });
 
-const isValid = (title) => {
-  return title;
+const getBookById = async (id) => {
+  const idIsValid = ObjectId(id);
+  if (!idIsValid) return false;
+  const db = await connection();
+  return db
+    .collection('books')
+    .findOne(ObjectId(id))
+    .catch((err) => {
+      throw err;
+    });
 };
 
-const find = async (id) => {
+const getBookByName = async (name) =>
   connection()
-    .then((db) => db.getTable('livros').select(['nome']).where('id = :id').bind('id', id).execute())
-    .then((results) => results.fetchAll())
-    .then((books) => books[0].map((book) => book));
+    .then((db) => db.collection('books').findOne({ name }))
+    .catch((err) => {
+      throw err;
+    });
+
+const getBookByAuthorName = async (author) =>
+  connection()
+    .then((db) => db.findOne({ author }))
+    .catch((err) => {
+      throw err;
+    });
+
+const addBook = async (book) => {
+  const db = await connection();
+  const result = await db
+    .collection('books')
+    .insertOne({ book })
+    .catch((err) => {
+      throw err;
+    });
+
+  return result.ops[0];
 };
 
-const create = async (title) =>
-  connection().then((db) => db.getTable('livros').insert(['nome']).values(title).execute());
+const updateBook = async (id, book) =>
+  connection()
+    .then((db) => db.collection('books').updateOne({ id: ObjectId(id) }, { $set: { book } }))
+    .catch((err) => {
+      throw err;
+    });
 
-module.exports = { findAll, create, isValid, find };
+const removeBook = async (id) => {
+  const book = await getBookById(id);
+  if (!book) return false;
+  await connection()
+    .then((db) => db.collection('books').deleteOne({ _id: ObjectId(id) }))
+    .catch((err) => {
+      throw err;
+    });
+};
+
+module.exports = {
+  getAllBooks,
+  getBookById,
+  getBookByName,
+  getBookByAuthorName,
+  addBook,
+  updateBook,
+  removeBook,
+};
