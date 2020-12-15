@@ -8,7 +8,7 @@ router.get('/', async (_req, res) => {
   try {
     const books = await BookModel.getAllBooks();
 
-    return res.status(200).json({ books });
+    return res.status(200).render('index', { books });
   } catch (err) {
     console.log(err);
     res.status(422).json({ error: 'Something gone wrong...' });
