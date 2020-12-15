@@ -19,6 +19,8 @@
 
     <h2><%= books.length %> livros cadastrados</h2>
 
+    <%= console.log(books.map(book => book._id)) %>
+
     <table class="table table-striped table-dark">
       <thead class="thead-dark">
         <tr>
@@ -26,6 +28,8 @@
           <th>Autor</th>
           <th>Categoria</th>
           <th>Capa</th>
+          <th>Lido por</th>
+          <th>Ver Livro</th>
         </tr>
       </thead>
       <tbody>
@@ -34,7 +38,9 @@
           <td><%= book.title %></td>
           <td><%= book.authorName %></td>
           <td><%= book.category %></td>
-          <td> <img width="50px" src="<%= book.img %>" alt="img"></td>
+          <td><img width="50px" src="<%= book.img %>" alt="img" /></td>
+          <td><%= book.readBy %></td>
+          <td><a class="btn btn-info" href="/books/<%= book._id %>">ver livro</a></td>
         </tr>
         <% } ) %>
       </tbody>

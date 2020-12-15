@@ -13,8 +13,10 @@ app.use('/books', booksController);
 // app.get('/books', booksController.index);
 // app.get('/books/new', booksController.add);
 // app.post('/books', booksController.create);
-// app.get('/books/:id', booksController.show);
+app.get('/books/:id', booksController);
 
 app.use('*', (req, res) => res.status(404).json({ message: 'notFound' }));
 
-app.listen(3000, () => console.log('Running on port 3000'));
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`Running on port ${PORT}`));

@@ -3,7 +3,7 @@ const connection = require('./connection');
 
 const getAllBooks = async () =>
   connection()
-    .then((db) => db.collection('newBooks').find().toArray())
+    .then((db) => db.collection('livros').find().toArray())
     .catch((err) => {
       throw err;
     });
@@ -13,7 +13,7 @@ const getBookById = async (id) => {
   if (!idIsValid) return false;
   const db = await connection();
   return db
-    .collection('books')
+    .collection('livros')
     .findOne(ObjectId(id))
     .catch((err) => {
       throw err;
@@ -22,7 +22,7 @@ const getBookById = async (id) => {
 
 const getBookByName = async (name) =>
   connection()
-    .then((db) => db.collection('books').findOne({ name }))
+    .then((db) => db.collection('livros').findOne({ name }))
     .catch((err) => {
       throw err;
     });
@@ -37,7 +37,7 @@ const getBookByAuthorName = async (author) =>
 const addBook = async (book) => {
   const db = await connection();
   const result = await db
-    .collection('books')
+    .collection('livros')
     .insertOne({ book })
     .catch((err) => {
       throw err;
@@ -48,7 +48,7 @@ const addBook = async (book) => {
 
 const updateBook = async (id, book) =>
   connection()
-    .then((db) => db.collection('books').updateOne({ id: ObjectId(id) }, { $set: { book } }))
+    .then((db) => db.collection('livros').updateOne({ id: ObjectId(id) }, { $set: { book } }))
     .catch((err) => {
       throw err;
     });
@@ -57,7 +57,7 @@ const removeBook = async (id) => {
   const book = await getBookById(id);
   if (!book) return false;
   await connection()
-    .then((db) => db.collection('books').deleteOne({ _id: ObjectId(id) }))
+    .then((db) => db.collection('livros').deleteOne({ _id: ObjectId(id) }))
     .catch((err) => {
       throw err;
     });

@@ -1,19 +1,45 @@
 const mongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
+require('dotenv/config');
 
+const password = process.env.PASSWORD;
+const dbname = 'baetaLeiteLivros';
+const DB_NAME = 'baetaLeiteLivros';
 const MONGO_DB_URL = 'mongodb://localhost:27017';
-const DB_NAME = 'baetaLeiteBooks';
+
+const mongoCluster = `mongodb+srv://baetaLeite:${password}@cluster0.v2kae.mongodb.net/${dbname}?retryWrites=true&w=majority`;
+// mongodb+srv://baetaLeite:<password>@libraryleite.cw0bi.mongodb.net/<dbname>?retryWrites=true&w=majority
+const URI = `mongodb+srv://baetaLeite:${password}@libraryleite.cw0bi.mongodb.net/${dbname}?retryWrites=true&w=majority`;
 
 const connection = () =>
   mongoClient
-    .connect(MONGO_DB_URL, {
+    .connect(URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then((conn) => conn.db(DB_NAME))
+    .then((conn) => {
+      return conn.db(DB_NAME);
+    })
     .catch((err) => {
       console.error(err);
       // process.exit(1);
       throw err;
     });
+
+// const connectionParams = {
+//   useNewUrlParser: true,
+//   useCreateIndex: true,
+//   useUnifiedTopology: true,
+// };
+
+// mongoose
+//   .connect(URI, connectionParams)
+//   .then((res) => {
+//     // console.log(res);
+//     console.log('Connected to database');
+//   })
+//   .catch((err) => {
+//     console.error(`Error connecting to the database. \n${err}`);
+//   });
 
 module.exports = connection;
