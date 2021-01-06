@@ -13,37 +13,39 @@
   </head>
 
   <body>
-    <h1>Leite Library</h1>
+    <main class="container">
+      <h1>Leite Library</h1>
 
-    <a href="/books/new">Novo livro</a>
+      <a href="/books/new">Novo livro</a>
 
-    <h2><%= books.length %> livros cadastrados</h2>
+      <h2><%= books.length %> livros cadastrados</h2>
 
-    <%= console.log(books.map(book => book._id)) %>
+      <%= console.log(books.map(book => book._id)) %>
 
-    <table class="table table-striped table-dark">
-      <thead class="thead-dark">
-        <tr>
-          <th>Título</th>
-          <th>Autor</th>
-          <th>Categoria</th>
-          <th>Capa</th>
-          <th>Lido por</th>
-          <th>Ver Livro</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% books.forEach((book)=> { %>
-        <tr>
-          <td><%= book.title %></td>
-          <td><%= book.authorName %></td>
-          <td><%= book.category %></td>
-          <td><img width="50px" src="<%= book.img %>" alt="img" /></td>
-          <td><%= book.readBy %></td>
-          <td><a class="btn btn-info" href="/books/<%= book._id %>">ver livro</a></td>
-        </tr>
-        <% } ) %>
-      </tbody>
-    </table>
+      <table class="table table-striped table-dark">
+        <thead class="thead-dark">
+          <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Categoria</th>
+            <th>Capa</th>
+            <th>Lido por</th>
+            <th>Ver Livro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% books.forEach((book)=> { %>
+          <tr>
+            <td><%= book.title %></td>
+            <td><%= book.authorName %></td>
+            <td><%= book.category %></td>
+            <td><img width="50px" src="<%= book.img %>" alt="img" /></td>
+            <td><%= book.readBy %></td>
+            <td><a class="btn btn-info" href="/books/<%= book._id %>">ver livro</a></td>
+          </tr>
+          <% } ) %>
+        </tbody>
+      </table>
+    </main>
   </body>
 </html>
