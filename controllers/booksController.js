@@ -7,6 +7,7 @@ const BookModel = require('../models/bookModel');
 router.get('/', async (_req, res) => {
   try {
     const books = await BookModel.getAllBooks();
+    console.log(books);
 
     return res.status(200).render('index', { books });
   } catch (err) {
@@ -58,14 +59,6 @@ const create = async (req, res) => {
     return res.status(400).render('/books', { message: 'Dados inválidos' });
   await BookModel.create(nome);
   res.redirect('/books?insertedBook=true');
-};
-
-const show = async (req, res) => {
-  const { id } = req.params;
-
-  const book = await BookModel.find(id);
-
-  res.json(book);
 };
 
 const destroy = (_req, res) => {
