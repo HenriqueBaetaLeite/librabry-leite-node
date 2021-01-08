@@ -10,12 +10,7 @@ app.set('views', './views/books');
 
 app.use('/books', booksController);
 
-// app.get('/books', booksController.index);
-// app.get('/books/new', booksController.add);
-// app.post('/books', booksController.create);
-app.get('/books/:id', booksController);
-
-app.use('*', (req, res) => res.status(404).json({ message: 'notFound' }));
+app.use('*', (_req, res) => res.status(404).json({ message: 'notFound' }));
 
 const PORT = process.env.PORT || 3000;
 

@@ -34,11 +34,11 @@ const getBookByAuthorName = async (author) =>
       throw err;
     });
 
-const addBook = async (book) => {
+const addBook = async (title, authorName, category, img) => {
   const db = await connection();
   const result = await db
     .collection('livros')
-    .insertOne({ book })
+    .insertOne({ title, authorName, category, img })
     .catch((err) => {
       throw err;
     });
@@ -46,9 +46,13 @@ const addBook = async (book) => {
   return result.ops[0];
 };
 
-const updateBook = async (id, book) =>
+const updateBook = async (id, { title, authorName, category, img }) =>
   connection()
-    .then((db) => db.collection('livros').updateOne({ id: ObjectId(id) }, { $set: { book } }))
+    .then((db) =>
+      db
+        .collection('livros')
+        .updateOne({ _id: ObjectId(id) }, { $set: { title, authorName, category, img } }),
+    )
     .catch((err) => {
       throw err;
     });

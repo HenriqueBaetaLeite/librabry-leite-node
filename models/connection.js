@@ -5,10 +5,7 @@ require('dotenv/config');
 const password = process.env.PASSWORD;
 const dbname = 'baetaLeiteLivros';
 const DB_NAME = 'baetaLeiteLivros';
-const MONGO_DB_URL = 'mongodb://localhost:27017';
 
-const mongoCluster = `mongodb+srv://baetaLeite:${password}@cluster0.v2kae.mongodb.net/${dbname}?retryWrites=true&w=majority`;
-// mongodb+srv://baetaLeite:<password>@libraryleite.cw0bi.mongodb.net/<dbname>?retryWrites=true&w=majority
 const URI = `mongodb+srv://baetaLeite:${password}@libraryleite.cw0bi.mongodb.net/${dbname}?retryWrites=true&w=majority`;
 
 const connection = () =>

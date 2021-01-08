@@ -1,6 +1,4 @@
-const express = require('express');
-
-const router = express.Router();
+const router = require('express').Router();
 
 const BookModel = require('../models/bookModel');
 
@@ -10,69 +8,58 @@ router.get('/', async (_req, res) => {
 
     return res.status(200).render('index', { books });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(422).json({ error: 'Something gone wrong...' });
   }
+});
+
+router.get('/new', async (_req, res) => {
+  res.status(200).render('add', { message: null });
 });
 
 router.get('/:id', async (req, res) => {
   try {
     const book = await BookModel.getBookById(req.params.id);
-    console.log(req.params);
 
     res.status(200).json({ book });
   } catch (err) {
-    console.log(err);
+    console.error(err);
 
-    res.status(422).json({ message: 'Error, something gone wrong...' });
+    res.status(422).json({ message: 'Error, something gone wrong... /:id' });
   }
 });
 
-router.post('/', async (req, res) => {
-  const { title, author, category } = req.body;
+router.delete('/:id', async (req, res) => {
   try {
-    const book = { title, author, category };
-    const insertBook = BookModel.addBook(book);
-    const books = BookModel.getAllBooks();
-    res.status(201).render('index', { books });
+    await BookModel.removeBook(req.params.id);
+    res.status(200).json({ msg: 'Book deleted...' });
   } catch (err) {
-    console.log(err);
-    res.status(404).json({ message: 'Something gone wrong' });
+    console.error(err);
+    res.status(400).json({ msg: 'Something wrong on delete...' });
   }
 });
 
-const index = async (req, res) => {
-  const { insertedBook } = req.query;
-  const message = insertedBook ? 'Cadastrado com sucesso!' : null;
-  const books = await BookModel.findAll();
-  res.render('books/index', { books, message });
-};
+router.put('/:id', async (req, res) => {
+  try {
+    await BookModel.updateBook(req.params.id, req.body);
+    res.status(200).json({ msg: 'book updated' });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ msg: 'Something wrong on update...' });
+  }
+});
 
-const add = (_req, res) => {
-  res.render('books/add', { message: null });
-};
-
-const create = async (req, res) => {
-  const { nome } = await req.body;
-  if (!BookModel.isValid(nome))
-    return res.status(400).render('/books', { message: 'Dados inválidos' });
-  await BookModel.create(nome);
-  res.redirect('/books?insertedBook=true');
-};
-
-const show = async (req, res) => {
-  const { id } = req.params;
-
-  const book = await BookModel.find(id);
-
-  res.json(book);
-};
-
-const destroy = (_req, res) => {
-  res.send('Livro deletado com sucesso');
-};
+router.post('/new', async (req, res) => {
+  const { title, authorName, category, img } = req.body;
+  console.log(req.body);
+  try {
+    const insertBook = await BookModel.addBook(title, authorName, category, img);
+    const books = await BookModel.getAllBooks();
+    res.status(201).json({ newBook: insertBook, Books: books });
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({ message: 'Something gone wrong on insert new book' });
+  }
+});
 
 module.exports = router;
-{
-  index, add, create, show;
-}
