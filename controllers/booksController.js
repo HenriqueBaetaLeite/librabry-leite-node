@@ -39,6 +39,16 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    await BookModel.updateBook(req.params.id, req.body);
+    res.status(200).json({ msg: 'book updated' });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ msg: 'Something wrong on update...' });
+  }
+});
+
 router.post('/new', async (req, res) => {
   const { title, authorName, category, img } = req.body;
   console.log(req.body);

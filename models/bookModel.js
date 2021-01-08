@@ -46,9 +46,13 @@ const addBook = async (title, authorName, category, img) => {
   return result.ops[0];
 };
 
-const updateBook = async (id, book) =>
+const updateBook = async (id, { title, authorName, category, img }) =>
   connection()
-    .then((db) => db.collection('livros').updateOne({ id: ObjectId(id) }, { $set: { book } }))
+    .then((db) =>
+      db
+        .collection('livros')
+        .updateOne({ _id: ObjectId(id) }, { $set: { title, authorName, category, img } }),
+    )
     .catch((err) => {
       throw err;
     });
