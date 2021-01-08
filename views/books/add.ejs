@@ -19,15 +19,18 @@
       <% if (message) { %>
       <p><%= message %>/p> <% } %></p>
 
-      <form action="/books" method="POST">
-        <label for="name">Título</label>
-        <input class="form-control" type="text" id="name" />
+      <form action="/books/new" method="POST">
+        <label for="title">Título</label>
+        <input class="form-control" type="text" id="title" name="title" />
 
-        <label for="autor">Autor</label>
-        <input class="form-control" type="text" name="autor" id="autor" />
+        <label for="authorName">Autor</label>
+        <input class="form-control" type="text" name="authorName" id="authorName" />
 
-        <label for="autor">Categoria</label>
-        <input class="form-control" type="text" name="autor" id="autor" />
+        <label for="category">Categoria</label>
+        <input class="form-control" type="text" name="category" id="category" />
+
+        <label for="img">Imagem da capa</label>
+        <input class="form-control" type="text" name="img" id="img" />
         <br />
         <button class="btn btn-success" type="submit">cadastrar</button>
       </form>

@@ -10,11 +10,7 @@ app.set('views', './views/books');
 
 app.use('/books', booksController);
 
-app.use('/books/new', booksController);
-
-app.use('/books/:id', booksController);
-
-app.use('*', (req, res) => res.status(404).json({ message: 'notFound' }));
+app.use('*', (_req, res) => res.status(404).json({ message: 'notFound' }));
 
 const PORT = process.env.PORT || 3000;
 

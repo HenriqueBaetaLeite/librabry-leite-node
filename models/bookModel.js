@@ -34,11 +34,11 @@ const getBookByAuthorName = async (author) =>
       throw err;
     });
 
-const addBook = async (book) => {
+const addBook = async (title, authorName, category, img) => {
   const db = await connection();
   const result = await db
     .collection('livros')
-    .insertOne({ book })
+    .insertOne({ title, authorName, category, img })
     .catch((err) => {
       throw err;
     });
