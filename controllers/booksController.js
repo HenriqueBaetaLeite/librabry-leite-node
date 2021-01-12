@@ -4,9 +4,11 @@ const BookModel = require('../models/bookModel');
 
 router.get('/', async (_req, res) => {
   try {
-    // const books = await BookModel.getAllBooks();
+    const books = await BookModel.getAllBooks();
 
-    return res.status(200).json({ message: 'Comentei o bookModel...' });
+    if (!books) return res.status(400).json({ message: 'Deu ruim no bookModel...' });
+
+    return res.status(200).json({ books });
   } catch (err) {
     console.error(err);
     res.status(422).json({ error: 'Something gone wrong...' });

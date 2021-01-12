@@ -3,10 +3,7 @@ const connection = require('./connection');
 
 const getAllBooks = async () =>
   connection()
-    .then(async (db) => {
-      console.log(db.collection('livros').namespace);
-      return db.collection('livros').find().toArray();
-    })
+    .then(async (db) => await db.collection('livros').find().toArray())
     .catch((err) => {
       throw err;
     });
