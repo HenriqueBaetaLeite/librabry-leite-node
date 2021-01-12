@@ -6,7 +6,7 @@ router.get('/', async (_req, res) => {
   try {
     const books = await BookModel.getAllBooks();
 
-    return res.status(200).render('index', { books });
+    return res.status(200).json({ books });
   } catch (err) {
     console.error(err);
     res.status(422).json({ error: 'Something gone wrong...' });
@@ -20,6 +20,8 @@ router.get('/new', async (_req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const book = await BookModel.getBookById(req.params.id);
+
+    if (!book) return res.status(400).json({ message: 'Livro não encontrado...' });
 
     res.status(200).json({ book });
   } catch (err) {
