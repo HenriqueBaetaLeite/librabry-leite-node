@@ -6,12 +6,9 @@ const DB_NAME = 'baetaLeiteLivros';
 
 const URL = process.env.URL;
 
-const urlTest =
-  'mongodb+srv://baetaLeite:348900hB@libraryleite.cw0bi.mongodb.net/baetaLeiteLivros?retryWrites=true&w=majority';
-
 const connection = () =>
   mongoClient
-    .connect(urlTest, {
+    .connect(URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })

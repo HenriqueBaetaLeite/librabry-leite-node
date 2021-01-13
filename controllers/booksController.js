@@ -3,17 +3,16 @@ const router = require('express').Router();
 const BookModel = require('../models/bookModel');
 
 router.get('/', async (_req, res) => {
-  // try {
-  const books = await BookModel.getAllBooks();
+  try {
+    const books = await BookModel.getAllBooks();
 
-  if (!books) return res.status(400).json({ message: 'Deu ruim no bookModel...' });
+    if (!books) return res.status(400).json({ message: 'Deu ruim no bookModel...' });
 
-  return res.status(200).json({ books });
-
-  //   } catch (err) {
-  //     console.error(err);
-  //     res.status(422).json({ error: 'Something gone wrong...' });
-  //   }
+    return res.status(200).json({ books });
+  } catch (err) {
+    console.error(err);
+    res.status(422).json({ error: 'Something gone wrong...' });
+  }
 });
 
 router.get('/new', async (_req, res) => {
