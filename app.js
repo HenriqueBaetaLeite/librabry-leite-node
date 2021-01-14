@@ -14,4 +14,6 @@ app.use('*', (_req, res) => res.status(404).json({ message: 'page not found' }))
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => console.log(`Running on port ${PORT}`));
+module.exports = app;
+
+// app.listen(PORT, () => console.log(`Running on port ${PORT}`));
